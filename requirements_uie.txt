@@ -1,0 +1,13 @@
+# NU2Net + DCTTA runtime only. Select compatible torch/torchvision builds for
+# the machine separately; do not replace an existing CUDA installation blindly.
+torch>=2.1
+torchvision>=0.16
+numpy
+Pillow
+scipy
+scikit-image>=0.19
+tqdm
+einops>=0.6
+accelerate==0.14.0
+ema-pytorch==0.8.3
+matplotlib>=3.5

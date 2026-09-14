@@ -1,0 +1,59 @@
+# Python 缓存、虚拟环境与构建产物
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+env/
+*.egg-info/
+build/
+dist/
+
+# 编辑器、系统文件及本机配置
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+desktop.ini
+.env
+.env.*
+!.env.example
+# 本地数据和产物：精确路径，保留 RDDM 同名目录中的源码
+/tmp/
+/testdata/
+/pretrain/
+/results/
+/dataset/
+/experiments/
+/RDDM/results/
+# 权重、数组缓存与下载归档
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.onnx
+*.h5
+*.hdf5
+*.npy
+*.npz
+*.pkl
+*.pickle
+*.zip
+*.7z
+*.rar
+*.tar
+*.tar.gz
+*.tgz
+# 日志与未完成的原子保存
+*.log
+*.pending
+events.out.tfevents.*
+runs/
+wandb/
+
+# 空的历史备份文件
+/utils/__init__.py.###

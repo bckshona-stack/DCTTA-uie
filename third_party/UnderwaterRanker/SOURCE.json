@@ -1,0 +1,9 @@
+{
+  "source": "https://github.com/RQ-Wu/UnderwaterRanker",
+  "paper": "Underwater Ranker: Learn Which Is Better and How to Be Better",
+  "local_source": "E:\\Codex\\UnderwaterRanker-master\\all_model\\NU2Net\\model.py",
+  "recorded_date": "2026-09-06",
+  "nu2net_sha256": "040c0dc550c5d9899279ea0fd037372b23b2fb73ca0e09c2b991f1cb09a91b10",
+  "license_sha256": "14a453bf4b3d9c39719c93a36e8f341e281b30660e0982cfaf4768915a0e8358",
+  "note": "Model supplied by user; copied byte-for-byte, unchanged."
+}
