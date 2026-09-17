@@ -71,8 +71,9 @@
 
 ### 阶段7：再退化使用强度对照（09-17起）
 
-状态：当前方案；两组已确认，尚未实现/运行。
+状态：当前阶段；G4/G5入口已实现，正式程序机验收与运行待执行。
 
+- [G4/G5程序机运行说明](07_20260917_strength_control/UIEB_BLUE_STRENGTH_CONTROL_RUN.md)
 - [UIEB_BLUE_STRENGTH_CONTROL_PLAN.md](07_20260917_strength_control/UIEB_BLUE_STRENGTH_CONTROL_PLAN.md)
 
 ## 如何区分文件用途

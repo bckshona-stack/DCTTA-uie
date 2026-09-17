@@ -2,7 +2,16 @@
 
 日期：2026-09-17。仓库根目录：E:\Codex\DCTTA-main\movetoUIE。上级DCTTA-main也有.git，所有下面命令都必须先进入movetoUIE，避免在错误仓库提交。
 
-## 当前状态
+## 已执行进展（2026-09-17）
+
+用户授权后，已创建 codex/redegradation-strength 分支，已提交：
+
+- 824c704：上一轮整图诊断入口和测试。
+- 2713958：文档阶段归档和G4/G5方案。
+
+下面“建议现在执行”的命令保留为操作记录，不要重复创建同名分支或重复提交。本轮G4/G5实现、专项测试与程序机运行说明另作开发提交，其身份以 git log -1 为准。尚未推送到远端或合并main。
+
+## 开发开始前状态
 
 检查时分支为main，最新提交为2bfbb6f（Initial-DCTTA-UIE-NU2Net-project）。上一轮diagnose_visual_uie.py、tests/test_visual_diagnostics.py及可视化诊断文档尚未提交，README也有未提交改动。本轮仅整理docs并新增实验方案；没有自动创建分支、暂存、提交或推送。
 
