@@ -1,5 +1,7 @@
 # UIEB 蓝色色偏第一轮实验复盘与适配诊断方案
 
+> 归档说明（2026-09-17）：本文件保留所属阶段的历史内容和当时状态；当前进展请看 [文档导航](../README.md)。文中“待运行”等描述不代表今天的状态。
+
 日期：2026-09-10。状态：第一轮结果已核查；诊断入口及只读观测、恢复验收、离线分析已实现并通过本地短程测试。程序机正式数据核验、22张前缀验收和133张重跑尚未执行。同步文件、实际输出结构及命令见 [诊断运行说明](UIEB_BLUE_DIAGNOSTIC_RUN.md)。本文后续的阶段和目录设计应结合该运行说明阅读。
 
 ## 1. 目标、结论与证据边界
@@ -54,7 +56,7 @@ F:\qmh\DCTTA-uie\dataset\UIEB\reference-890_4classes_severity\blue_tint
 - 完整图评价，pad8 后裁回原尺寸；RGB 浮点指标，统计前 clip[0,1]，不以保存后的 8-bit PNG 替代浮点预测计算。
 - 目标 reference 只用于文件核验和离线评价，不进入 Fisher、教师、RDDM 或学生损失。
 
-“保持原仓库核心执行逻辑”与“严格按论文实验配置复现”必须区分。此前审查记录论文与本地原代码在 EMA、损失系数、感知损失和 Fisher 定义等方面存在差别；正式诊断前应依据正文、补充材料和实际调用代码重新核对，不把差异默认为迁移引入的错误。见 [既有审查](../../DCTTA_ADAPTATION_REVIEW.md)。
+“保持原仓库核心执行逻辑”与“严格按论文实验配置复现”必须区分。此前审查记录论文与本地原代码在 EMA、损失系数、感知损失和 Fisher 定义等方面存在差别；正式诊断前应依据正文、补充材料和实际调用代码重新核对，不把差异默认为迁移引入的错误。见 [既有审查](../../../DCTTA_ADAPTATION_REVIEW.md)。
 
 ## 3. 第一轮结果
 
@@ -327,10 +329,10 @@ diagnostic_v1/
 
 ## 11. 证据索引
 
-- [源训练日志](../experiments/UIEBblue_weaktostrong_NU2Net/source/logs/epochs.csv)
-- [三组汇总](../experiments/UIEBblue_weaktostrong_NU2Net/comparison/summary.json)、[逐图对比](../experiments/UIEBblue_weaktostrong_NU2Net/comparison/per_image.csv)
-- [DCTTA运行记录](../experiments/UIEBblue_weaktostrong_NU2Net/dctta/run.json)、[已存在的133步汇总损失](../experiments/UIEBblue_weaktostrong_NU2Net/dctta/adaptation.jsonl)
-- [实验过程记录](UIEB_BLUE_EXPERIMENT_LOG.md)、[原实验协议](UIEB_BLUE_EXPERIMENT_PLAN.md)
+- [源训练日志](../../experiments/UIEBblue_weaktostrong_NU2Net/source/logs/epochs.csv)
+- [三组汇总](../../experiments/UIEBblue_weaktostrong_NU2Net/comparison/summary.json)、[逐图对比](../../experiments/UIEBblue_weaktostrong_NU2Net/comparison/per_image.csv)
+- [DCTTA运行记录](../../experiments/UIEBblue_weaktostrong_NU2Net/dctta/run.json)、[已存在的133步汇总损失](../../experiments/UIEBblue_weaktostrong_NU2Net/dctta/adaptation.jsonl)
+- [实验过程记录](../00_project/UIEB_BLUE_EXPERIMENT_LOG.md)、[原实验协议](../02_20260907_09_baseline/UIEB_BLUE_EXPERIMENT_PLAN.md)
 - 当前代码：`uie_tta.py` 的 SRTTA/TargetRawDataset/ImageRestorationAdapter；`RDDM/net.py`；`RDDM/src/residual_denoising_diffusion_pytorch.py` 的 p_losses/Trainer.train/Trainer.test/ResidualDiffusion.init；`uie_backbones/nu2net.py`。
 - 域划分代码：`E:\Codex\CLIP-DatasetClassification\split_degradation_severity.py`。当前尚未核验程序机实际评分CSV是否与本地脚本版本对应。
 - [UIEB官方说明](https://li-chongyi.github.io/proj_benchmark.html)、[RDDM原论文](https://openaccess.thecvf.com/content/CVPR2024/html/Liu_Residual_Denoising_Diffusion_Models_CVPR_2024_paper.html)。本文结果来自回传实验，不将文献结果当作本次测量。

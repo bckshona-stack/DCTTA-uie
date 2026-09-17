@@ -1,0 +1,34 @@
+{
+  "status": {
+    "status": "complete",
+    "images": 995,
+    "steps": 133,
+    "metric_rows": 752,
+    "exact_g0_replay": true,
+    "files": {
+      "metrics.csv": "e239c8876a7221ff55983bf9eb584d1b7b20ff5d827d5d6013ce1db9824cd01c",
+      "snapshot_summary.csv": "7ec3ed221687142ecabb47b197362a8913b7c852aa5d21ba09c680384723d0a2",
+      "trajectory.json": "d46a7d298f715e564c3f424689fff53e4086f8ae5f8b2a63285edb40ef8d9719",
+      "progress.json": "24260f524c54b4578d14b3c03fce6652d021bb241a55c25db1a20f45382e5076"
+    }
+  },
+  "hash_errors": [],
+  "files_checked": 999,
+  "png_count": 995,
+  "exact_trajectory": true,
+  "entry_hash_matches": true,
+  "bytes": 1011101159,
+  "quantization_delta": {
+    "n": 752,
+    "mean": 0.0005168351619950466,
+    "median": 0.00032105190540399065,
+    "min": 3.03590574901591e-07,
+    "max": 0.0074378737752915924,
+    "q25": 0.00019603424762104638,
+    "q75": 0.0005621999102558561,
+    "negative": 0,
+    "positive": 752
+  },
+  "data_hash_errors": [],
+  "png_metric_errors": []
+}

@@ -4,6 +4,10 @@
 
 本仓库根目录为 `movetoUIE/`，程序机部署目录为 `F:\qmh\DCTTA-uie`。源域监督训练、目标域适配和独立推理已分开；目录内保留部分 PromptIR 对照代码。
 
+## 文档导航
+
+文档已按实验阶段归档，先看 [文档导航](docs/README.md)。当前工作为 [两组再退化使用强度对照方案](docs/07_20260917_strength_control/UIEB_BLUE_STRENGTH_CONTROL_PLAN.md)，尚未实现或运行；Git操作建议见 [版本管理说明](docs/00_project/GIT_WORKFLOW.md)。
+
 ## 当前功能
 
 - **源域监督训练**：使用 raw/reference 成对图像训练 NU²Net；通过 CSV 清单划分数据，原图不移动；保存最佳权重、最后一轮权重、训练日志及曲线，支持续训。
@@ -132,9 +136,10 @@ python test_uie.py --mode evaluate --model_path "$exp\dctta\adapted_model.pth" -
 
 | 入口 | 用途 | 已有运行说明 |
 |---|---|---|
-| `diagnose_uie.py` | 完整诊断、严格验收、数值对照 | [v2诊断说明](docs/UIEB_BLUE_DIAGNOSTIC_V2_RUN.md) |
-| `diagnose_update_uie.py` | 重放真实单步，分析Adam及Fisher作用 | [单步诊断说明](docs/UIEB_BLUE_UPDATE_DIAGNOSTIC_RUN.md) |
-| `run_factorial_uie.py` | 三组路径对照；复用已有G0 | [三组对照说明](docs/UIEB_BLUE_FACTORIAL_RUN.md) |
+| `diagnose_uie.py` | 完整诊断、严格验收、数值对照 | [v2诊断说明](docs/03_20260910_11_strict_diagnostic/UIEB_BLUE_DIAGNOSTIC_V2_RUN.md) |
+| `diagnose_update_uie.py` | 重放真实单步，分析Adam及Fisher作用 | [单步诊断说明](docs/04_20260912_update_diagnostic/UIEB_BLUE_UPDATE_DIAGNOSTIC_RUN.md) |
+| `diagnose_visual_uie.py` | G0 整图伪标签、再退化输入和学生输出诊断 | [整图诊断说明](docs/06_20260914_15_visual_diagnostic/UIEB_BLUE_VISUAL_DIAGNOSTIC_RUN.md) |
+| `run_factorial_uie.py` | 三组路径对照；复用已有G0 | [三组对照说明](docs/05_20260912_13_factorial/UIEB_BLUE_FACTORIAL_RUN.md) |
 
 这些诊断入口绑定既有实验资产及哈希，不是任意新数据直接可用的通用训练入口。固定第一轮Fisher的兼容记录具有明确实验身份，不能通过修改旧结果绕过检查。
 
@@ -146,7 +151,7 @@ python -m unittest discover -s tests
 
 部分真实RDDM诊断测试需设置 `DCTTA_TEST_RDDM=1`，会生成较大的临时产物，常规测试默认跳过它们。
 
-实验过程和当前结论见 [实验记录](docs/UIEB_BLUE_EXPERIMENT_LOG.md) 与 [路径对照分析](docs/UIEB_BLUE_FACTORIAL_ANALYSIS.md)。
+实验过程和当前结论见 [实验记录](docs/00_project/UIEB_BLUE_EXPERIMENT_LOG.md) 与 [路径对照分析](docs/05_20260912_13_factorial/UIEB_BLUE_FACTORIAL_ANALYSIS.md)。
 
 ## Git 管理范围
 

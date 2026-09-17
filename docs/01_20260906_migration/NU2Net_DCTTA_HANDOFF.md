@@ -1,5 +1,7 @@
 # NU²Net-L1 源模型训练与 DCTTA 对接说明
 
+> 归档说明（2026-09-17）：本文件保留所属阶段的历史内容和当时状态；当前进展请看 [文档导航](../README.md)。文中“待运行”等描述不代表今天的状态。
+
 日期：2026-09-06
 
 ## 1. 目标与范围
@@ -18,7 +20,7 @@
 |---|---|---|
 | `all_model/NU2Net/model.py` | `uie_backbones/nu2net.py` | 完整复制，第一版保留原网络、残差连接和 normalization tail |
 | `LICENSE` | `third_party/UnderwaterRanker/LICENSE` | 保留来源许可证，不覆盖 DCTTA 自己的许可证 |
-| 本文 `NU2Net_DCTTA_HANDOFF.md` | `docs/NU2Net_DCTTA_HANDOFF.md` | 作为对接任务说明 |
+| 本文 `NU2Net_DCTTA_HANDOFF.md` | `docs/01_20260906_migration/NU2Net_DCTTA_HANDOFF.md` | 作为对接任务说明 |
 
 **就运行 NU²Net 架构而言，只需要一个 Python 文件：`all_model/NU2Net/model.py`。** 它仅导入 `torch` 与 `torch.nn`，不依赖本项目的 `utils.py`、`loss.py`、数据集或 URanker。
 

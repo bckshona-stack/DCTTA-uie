@@ -1,5 +1,7 @@
 # 程序机运行步骤
 
+> 归档说明（2026-09-17）：本文件保留所属阶段的历史内容和当时状态；当前进展请看 [文档导航](../README.md)。文中“待运行”等描述不代表今天的状态。
+
 将本地 `movetoUIE` 的内容同步到程序机 `F:\qmh\DCTTA-uie`。正式数据、源权重和 GPU 实验不在本地自动创建。入口明确分为源训练和目标适配。
 
 以下命令在该目录下运行；示例使用 PowerShell。确认当前 Python 环境已有兼容的 CUDA PyTorch/torchvision，再补齐 `requirements_uie.txt` 中的依赖（源训练曲线需要 matplotlib）。不要用本地 CPU 测试环境替换程序机 CUDA 环境。
@@ -19,7 +21,7 @@ python train_source_uie.py --prepare_only --experiment_dir $exp
 
 默认预期 source=134 对、target=133 对、val_count=27。输出 `manifests/image_inventory.csv`（每图宽高和文件哈希）与 `preparation_report.json`（短边分布、重复情况）。原图不移动、不改名、不删除。
 
-2026-09-08 已确认排除源域 `582_img_.png`、`648_img_.png`，默认配置自动按已核实的像素哈希从清单排除，记录在 `source_exclusions.json`。目录仍应有 134 对，所以不要修改 expected_source；有效源域预计 132 对（训练105/验证27），目标133对不变。同步 `options.py` 和 `train_source_uie.py` 后重跑准备命令即可；未知冲突仍会报错。详细经过见 [实验过程记录](UIEB_BLUE_EXPERIMENT_LOG.md)。
+2026-09-08 已确认排除源域 `582_img_.png`、`648_img_.png`，默认配置自动按已核实的像素哈希从清单排除，记录在 `source_exclusions.json`。目录仍应有 134 对，所以不要修改 expected_source；有效源域预计 132 对（训练105/验证27），目标133对不变。同步 `options.py` 和 `train_source_uie.py` 后重跑准备命令即可；未知冲突仍会报错。详细经过见 [实验过程记录](../00_project/UIEB_BLUE_EXPERIMENT_LOG.md)。
 
 如果提示精确 raw 重复或 reference 冲突，查看 `manifests/exact_duplicate_report.json`。终端也会列出两张图片的 ID 与 reference 路径；报告包含全部检测到的重复对、reference 平均像素差及最大差值。此时尚未生成最终清单，不能直接开始训练。相同 raw 配不同 ref 不一定是匹配错误，须对照原始 UIEB 文件核对，不自动删除或任选一个 reference。
 
