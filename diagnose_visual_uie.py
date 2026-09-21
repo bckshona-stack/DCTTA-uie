@@ -1,4 +1,4 @@
-"""G0 整图诊断：精确重放原轨迹，导出教师伪标签、x_sd、y_sd。"""
+"""G0 整图中间过程诊断：统一输出教师伪标签、x_sd、y_sd、y_in。"""
 import argparse
 import csv
 import hashlib
@@ -158,14 +158,20 @@ def estimate(rows, chosen, stages):
     def png_bound(r):
         # RGB8 每行滤波字节，预留压缩流/PNG块的保守开销。
         return math.ceil((3*r['width']+1)*r['height']*1.01)+65536
-    images = 5*len(rows) + 3*len(chosen)*len(stages)
-    upper = 5*sum(map(png_bound, rows))+3*len(stages)*sum(map(png_bound, chosen))
+    images = 7*len(rows) + 4*len(chosen)*len(stages)
+    upper = 7*sum(map(png_bound, rows))+4*len(stages)*sum(map(png_bound, chosen))
     return dict(images=images, png_conservative_bytes=upper, metadata_reserve_bytes=20_000_000,
                 estimated_bytes=upper+20_000_000, snapshot_steps=stages)
 
 
 def prepare(args):
     independent_output(args.output_dir, [args.experiment_dir, args.diagnostic_dir])
+    # 必须在任何写入前拒绝旧版本目录，避免改写旧容量估算等元数据。
+    manifest_path = Path(args.output_dir)/'run_manifest.json'
+    if manifest_path.exists():
+        saved = read(manifest_path)
+        if saved.get('version') != 3 or saved.get('entry_sha256') != sha(__file__):
+            raise ValueError('Existing visual output uses another code/version; use a new visual_v3 directory or yin-run for historical supplementation')
     output = Output(args.output_dir, int(args.max_gb*1_000_000_000))
     if not (output.root/'run_manifest.json').exists():
         unexpected = [p.name for p in output.root.iterdir() if p.name not in {'selected_samples.csv','storage_estimate.json'}]
@@ -242,7 +248,8 @@ def preflight(args):
     acceptance = root/'acceptance/initial.pth'
     if d.digest(initial) != d.digest(u.load_checkpoint(acceptance)):
         raise ValueError('Original initial state differs from acceptance')
-    manifest = dict(version=2, entry_sha256=sha(__file__), selected=chosen,
+    manifest = dict(version=3, entry_sha256=sha(__file__), selected=chosen,
+        image_roles=['teacher_pseudo','x_sd','y_sd','y_in'],
         selection_csv_sha256=sha(output.root/'selected_samples.csv'), snapshot_steps=stages,
         experiment_dir=str(Path(args.experiment_dir).resolve()), diagnostic_dir=str(root.resolve()),
         device=args.device, max_bytes=output.limit, inputs={p:sha(root/p) for p in paths},
@@ -366,6 +373,12 @@ def export_image(output, name, tensor):
     return digest, quantized
 
 
+def student_raw_prediction(model, raw):
+    """实时快照与历史补导出共用同一整图 y_in 推理，不改变模式/权重。"""
+    with torch.no_grad():
+        return model(raw)
+
+
 def observe(t,g,sample,source,output,prefix,seed,fixed_x=None,prior=None):
     # 不读取 reference，直到所有诊断前向已完成。
     with torch.no_grad():
@@ -373,10 +386,11 @@ def observe(t,g,sample,source,output,prefix,seed,fixed_x=None,prior=None):
         pseudo = u.eight_view_mean(t.model_teacher,raw)
         x = generate_full(g,raw,sample.sample_id,seed) if fixed_x is None else fixed_x.to(t.device)
         y = t.model(x)
+        y_in = student_raw_prediction(t.model,raw)
     ref = u.read_rgb(sample.reference_path).unsqueeze(0)
     name = sample.sample_id if sample.sample_id.lower().endswith('.png') else sample.sample_id+'.png'
     files, metrics = {}, []
-    for role,value in [('teacher_pseudo',pseudo),('x_sd',x),('y_sd',y)]:
+    for role,value in [('teacher_pseudo',pseudo),('x_sd',x),('y_sd',y),('y_in',y_in)]:
         if role=='x_sd' and fixed_x is not None:
             continue
         path = '%s/%s/%s'%(role,prefix,name)
@@ -497,7 +511,7 @@ def execute(args):
     verify_files(output,progress['files'])
     summary=[]
     for step in stages:
-        for role in ['teacher_pseudo','y_sd']:
+        for role in ['teacher_pseudo','y_sd','y_in']:
             subset=[r for r in progress['metrics'] if r['kind']=='snapshot' and r['step']==step and r['role']==role]
             summary.append(dict(step=step,role=role,count=len(subset),
                 mean_psnr=sum(r['psnr'] for r in subset)/len(subset),
@@ -514,13 +528,27 @@ def main(argv=None):
     parser=argparse.ArgumentParser(description=__doc__)
     for name in ['experiment_dir','diagnostic_dir','output_dir']:
         parser.add_argument('--'+name,required=True)
-    parser.add_argument('--phase',choices=['select','preflight','run'],default='select')
+    parser.add_argument('--phase',choices=['select','preflight','run','yin-preflight','yin-run'],default='select')
+    parser.add_argument('--visual_dir',help='Completed historical visual output; required for yin-* phases')
     parser.add_argument('--selection_csv')
     parser.add_argument('--device',default='cuda:0')
     parser.add_argument('--max_gb',type=float,default=10.)
     args=parser.parse_args(argv)
     if not 0<args.max_gb<=10:
         parser.error('--max_gb must be in (0,10]')
+    if args.phase.startswith('yin-'):
+        if not args.visual_dir:
+            parser.error('--visual_dir is required for yin-* phases')
+        # 同一入口提供旧实验补齐模式；不重跑适配和RDDM。
+        import export_g0_yin as supplemental
+        supplemental.runtime()
+        if args.phase=='yin-preflight':
+            _,contract,_,_=supplemental.prepare(args)
+            print('Y_in preflight PASSED: %d checkpoints, %d images, <= %.3f GB disk' %
+                  (contract['steps'],contract['expected_images'],contract['estimated_bytes']/1e9),flush=True)
+        else:
+            supplemental.execute(args)
+        return
     if args.phase=='select':
         prepare(args)
         return

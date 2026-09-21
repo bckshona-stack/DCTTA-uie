@@ -31,6 +31,8 @@ class VisualTests(unittest.TestCase):
 
     def test_schedule_and_budget_atomic_replacement(self):
         self.assertEqual(v.schedule(133),[0,14,27,40,54,67,80,94,107,120,133])
+        row=dict(width=37,height=49)
+        self.assertEqual(v.estimate([row]*133,[row]*10,v.schedule(133))['images'],1371)
         root=retained_directory(); output=v.Output(root,12)
         output.put('a',b'123456')
         with self.assertRaises(RuntimeError):output.put('b',b'1234567')
@@ -49,6 +51,20 @@ class VisualTests(unittest.TestCase):
             diagnostic_dir=str(root/'diag'),max_gb=10,selection_csv=None)
         with self.assertRaises(FileExistsError):v.prepare(args)
         self.assertEqual((out/'keep.txt').read_text(),'keep')
+
+    def test_old_output_untouched_and_supplement_routing(self):
+        root=retained_directory(); out=root/'output'; out.mkdir()
+        (out/'run_manifest.json').write_text('{"version":2,"entry_sha256":"old"}')
+        (out/'storage_estimate.json').write_text('historical')
+        args=SimpleNamespace(output_dir=str(out),experiment_dir=str(root/'exp'),
+            diagnostic_dir=str(root/'diag'),max_gb=10,selection_csv=None)
+        with self.assertRaisesRegex(ValueError,'another code/version'):v.prepare(args)
+        self.assertEqual((out/'storage_estimate.json').read_text(),'historical')
+        import export_g0_yin as supplement
+        with patch.object(supplement,'runtime'),patch.object(supplement,'execute') as run:
+            v.main(['--phase','yin-run','--experiment_dir','exp','--diagnostic_dir','diag',
+                    '--visual_dir','visual','--output_dir','out'])
+            self.assertEqual(run.call_args.args[0].visual_dir,'visual')
 
     def test_png_and_psnr_match_legacy(self):
         v.runtime(); torch=v.torch
@@ -121,9 +137,16 @@ class VisualTests(unittest.TestCase):
         loss=t.adapt(crop.unsqueeze(0),order,g)
         expected=d.digest(d.capture(t,g,1,order))
         d.restore(t,g,initial)
+        with torch.no_grad():
+            t.model.eval()
+            expected_yin=v.psnr(t.model(u.read_rgb(sample.raw_path).unsqueeze(0)),
+                                u.read_rgb(sample.reference_path).unsqueeze(0))
+        d.restore(t,g,initial)
         with v.isolated_diagnostic(t,g,0,order):
             x,metrics,files=v.observe(t,g,sample,20.,output,'online/000001/before',v.sample_seed(23,'a.png'))
         self.assertEqual(x.shape,(1,3,37,49))
+        self.assertEqual({r['role'] for r in metrics},{'teacher_pseudo','y_sd','y_in'})
+        self.assertEqual(next(r['psnr'] for r in metrics if r['role']=='y_in'),expected_yin)
         self.assertEqual(d.digest(initial),d.digest(d.capture(t,g,0,order)))
         self.assertEqual(loss,t.adapt(crop.unsqueeze(0),order,g))
         self.assertEqual(expected,d.digest(d.capture(t,g,1,order)))
@@ -131,7 +154,8 @@ class VisualTests(unittest.TestCase):
             reused,after,af=v.observe(t,g,sample,20.,output,'online/000001/after',23,
                 fixed_x=x,prior={r['role']:r['psnr'] for r in metrics})
         self.assertTrue(torch.equal(reused,x))
-        self.assertEqual(len(files)+len(af),5)
+        self.assertEqual(len(files)+len(af),7)
+        self.assertEqual({r['role'] for r in after},{'teacher_pseudo','y_sd','y_in'})
         self.assertEqual({r['x_sd_tensor_sha256'] for r in metrics+after},{d.digest(x)})
         self.assertEqual(expected,d.digest(d.capture(t,g,1,order)))
         # 同状态、同固定种子，整图采样完全可复现。

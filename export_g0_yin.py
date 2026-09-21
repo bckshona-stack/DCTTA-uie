@@ -87,7 +87,7 @@ def prepare(args):
 def measure(model, sample, source_psnr, out, step, save_image):
     raw = u.read_rgb(sample.raw_path).unsqueeze(0).to(next(model.parameters()).device)
     ref = u.read_rgb(sample.reference_path).unsqueeze(0)
-    pred = model(raw)
+    pred = v.student_raw_prediction(model, raw)
     result = dict(step=step, sample_id=sample.sample_id, source_only_psnr=source_psnr,
                   student_raw_psnr=v.psnr(pred, ref), student_raw_png_psnr='', path='')
     files = {}
