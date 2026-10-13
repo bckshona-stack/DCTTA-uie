@@ -1,10 +1,8 @@
 """G6/G7：固定源教师、逐图重置的200步物理再退化TTA。"""
 import argparse
 import gc
-import io
 import json
 import math
-import os
 import time
 from contextlib import contextmanager
 from copy import deepcopy
@@ -124,6 +122,25 @@ def estimate(rows, chosen, stages, initial):
                 patch_images_per_group=3*len(rows), cache_bytes=cache, checkpoint_peak_bytes=3*mature)
 
 
+def publish_plan(out, value, chosen):
+    plan = out.root/'plan.json'
+    if plan.exists():
+        if v.read(plan)['contract'] != value:
+            raise ValueError('Experiment contract changed; use a new directory')
+    else:
+        if any(out.root.iterdir()): raise ValueError('Output must initially be empty')
+        out.json('plan.json', dict(contract=value, creation_git=s.git_identity()))
+    # plan先原子发布；CSV尚未提交时可按同一冻结内容补写，不覆盖不同的CSV。
+    blob = v.csv_bytes(chosen); selection = out.root/'selected_samples.csv'
+    if not selection.exists(): out.put('selected_samples.csv', blob)
+    if v.sha(selection) != __import__('hashlib').sha256(blob).hexdigest():
+        raise ValueError('Selection output changed')
+
+
+def write_progress(out, group, cursor, total):
+    out.json(group+'/progress.json', dict(committed_step=cursor, total=total, used_bytes=out.used()))
+
+
 def preflight(args):
     device = pilot.configure_runtime(args.device); v.runtime(); d.require_strict()
     roots = [args.experiment_dir, args.diagnostic_dir, args.factorial_dir, args.strength_dir,
@@ -202,15 +219,9 @@ def preflight(args):
         device=str(device), max_bytes=out.limit, source_only_sha256=v.sha(Path(args.experiment_dir)/'source_only/run.json'),
         definition='fixed source x8; per-image reset K200; cumulative student; no reference fitting; full-frame diagnostics independent')
     value = json.loads(json.dumps(value))
-    if (out.root/'plan.json').exists():
-        if v.read(out.root/'plan.json')['contract'] != value: raise ValueError('Experiment contract changed; use a new directory')
-    else:
-        if any(out.root.iterdir()): raise ValueError('Output must initially be empty')
-        out.json('plan.json', dict(contract=value, creation_git=s.git_identity()))
-        out.put('selected_samples.csv', v.csv_bytes(chosen))
-    if v.sha(out.root/'selected_samples.csv') != __import__('hashlib').sha256(v.csv_bytes(chosen)).hexdigest():
-        raise ValueError('Selection output changed')
-    d.require_space(out.root, size['estimated_peak_bytes'])
+    publish_plan(out, value, chosen)
+    # 总目录峰值已含现有文件；续跑只需尚未占用的峰值空间。
+    d.require_space(out.root, max(0, size['estimated_peak_bytes']-out.used()))
     print('G6/G7 preflight PASSED; K200; storage peak <= %.3f GB'% (size['estimated_peak_bytes']/1e9), flush=True)
     return out, protocol, groups, chosen, stages
 
@@ -377,17 +388,21 @@ def run_group(args, group):
         if saved['group'] != group or saved['plan_sha256'] != plan_sha: raise ValueError('Resume contract differs')
         rows, metrics, files = saved['rows'], saved['metrics'], saved['files']; s.verify_index(out.root, files)
         cursor = saved['state']['cursor']
-        if len(rows) != cursor or not 0 <= cursor <= len(order) or saved['state']['order'] != order or saved['state_sha256'] != d.digest(saved['state']):
+        if (len(rows) != cursor or not 0 <= cursor <= len(order) or saved['state']['order'] != order or
+            saved['state']['steps'] != cursor or saved['state'].get('format_version') != 'physical_v1' or
+            saved['state_sha256'] != d.digest(saved['state'])):
             raise ValueError('Resume state/cursor/order differs')
         restore(t, saved['state'])
         if d.digest(capture(t, cursor, order)) != saved['state_sha256']: raise ValueError('Resume restoration differs')
         del saved
+        # resume是提交事实；中断可发生在其原子替换之后、progress写入之前。
+        write_progress(out, group, cursor, len(order))
     del initial
     def commit(step):
         state = capture(t, step, order)
         out.checkpoint(group+'/resume.pth', dict(group=group, plan_sha256=plan_sha, state=state,
             state_sha256=d.digest(state), rows=rows, metrics=metrics, files=files))
-        out.json(group+'/progress.json', dict(committed_step=step, total=len(order), used_bytes=out.used()))
+        write_progress(out, group, step, len(order))
     if not resume.exists():
         extra, measured, _ = observe(t, groups, chosen, 0, order, out, group, protocol, stages)
         files.update(extra); metrics.extend(measured); commit(0)

@@ -1,6 +1,6 @@
 # G6/G7物理再退化：正式程序机运行说明
 
-日期：2026-10-13。用户已确认A方案：统一K=200；G6为γ=0.5，G7为γ=1。入口已实现；8项本地CPU专项测试通过，程序机CUDA验收和正式133图实验待运行。
+日期：2026-10-13。用户已确认A方案：统一K=200；G6为γ=0.5，G7为γ=1。入口已实现；11项正式TTA本地CPU专项测试通过，程序机CUDA验收和正式133图实验待运行。
 
 ## 1. 冻结配置
 
@@ -80,7 +80,7 @@ python run_physical_uie.py --phase accept @physicalArgs
 python run_physical_uie.py --phase all @physicalArgs
 ~~~
 
-preflight核对源权重、旧protocol/Fisher、原图片和裁剪、预实验完成状态及其文件哈希、冻结的拟合配置、G0—G5最终评价身份、当前代码和数值环境。输出总目录磁盘估算，不超过10 GB才继续。10 GB是磁盘预算，不是显存/RAM上限。
+preflight核对源权重、旧protocol/Fisher、原图片和裁剪、预实验完成状态及其文件哈希、冻结的拟合配置、G0—G5最终评价身份、当前代码和数值环境。首次预检在plan.json提交后、选图CSV提交前中断时，重试可按同一冻结内容补写缺失CSV；已有但内容不同的CSV会拒绝覆盖。输出总目录磁盘估算，不超过10 GB才继续。10 GB是磁盘预算，不是显存/RAM上限。
 
 accept先用γ=0核对原G3第一步损失和学生权重，再对两组分别验证3张图的连续/恢复结果、观测隔离，并用10张典型图中最大的完整原图测试诊断路径。它执行真实学生更新验收，但不写入正式G6/G7学生初态。
 
@@ -140,7 +140,7 @@ UIEBblue_weaktostrong_NU2Net_physical_v1/
 
 trajectory.json的timing分开记录teacher_seconds、fit_seconds、fit_statistics_seconds、student_with_observer_seconds、training_export_seconds、observation_seconds。fit_seconds包含200步优化、逐步有限性/梯度检查、轨迹记录与最终生成，不包含教师推理、输入统计或PNG导出；student_with_observer_seconds包含原学生更新与只读更新摘要开销。不能与旧28.27秒完整诊断计时直接当作纯算法加速比。原子权重提交耗时不包括在这些分项中。
 
-每张图更新与观测完成后原子提交resume.pth。异常后保持相同代码、参数、设备环境，在同一新增$out重执行all或对应run。最多重算一个未提交的适应步骤；不中途继承单图退化Adam。已提交文件哈希不一致会拒绝续跑。
+每张图更新与观测完成后原子提交resume.pth。resume中的cursor为已提交步骤的依据；若其提交后、progress.json写入前中断，再启动会按cursor修复进度文件，最后一步已经提交时不会重复训练。异常后保持相同代码、参数、设备环境，在同一新增$out重执行all或对应run。最多重算一个未提交的适应步骤；不中途继承单图退化Adam。已提交文件哈希不一致会拒绝续跑。
 
 本机仅完成CPU实现检查；程序机上的正式源模型、VGG和CUDA组合以accept实际结果为准。最大图诊断按完整图处理，需要足够GPU空闲显存。
 
@@ -149,3 +149,11 @@ trajectory.json的timing分开记录teacher_seconds、fit_seconds、fit_statisti
 运行完成回传整个新增$out；旧输出、源权重和数据不必重复回传。先确认G6/G7/status.json与comparison/status.json为complete。
 
 开发机已在codex/physical-redegradation分支记录实现提交。回传分析另作独立提交，完整输出/数据/权重留在Git之外。正式验收和结果分析通过后再考虑推送与审阅合并；当前没有推送或合并。
+
+## 8. 代码复查后同步
+
+本次复查修复入口的初始化与断点恢复边界。若已同步上一版，只需重新同步run_physical_uie.py与本运行说明；专项测试文件同步tests/test_physical_tta.py。无须重新同步其余5个运行辅助文件。
+
+已有plan.json会绑定旧入口SHA256；更新代码后不得在旧协议下混合续跑。若已做过旧版预检，使用新的输出目录（例如将$out设置为F:\qmh\DCTTA-uie\experiments\UIEBblue_weaktostrong_NU2Net_physical_v2）重新预检和验收，保留旧目录。如果尚未创建正式plan，仍使用physical_v1。正在运行的进程不要中途替换其源码。
+
+详细复查范围与证据见 [代码复查记录](UIEB_BLUE_PHYSICAL_TTA_CODE_REVIEW.md)。

@@ -194,4 +194,102 @@ class FormalPhysicalTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'common physical fit'): r.compare(args)
 
 
+    def test_plan_csv_interruption_recovers_and_tamper_rejected(self):
+        _, _, prepared, _, _, _, _ = self.fixture()
+        out = r.s.BudgetOutput(prepared[0].root.parent/'plan_output', 10_000_000)
+        chosen = prepared[3]; contract = dict(chosen=chosen, fit_steps=200)
+        original = out.put
+        def interrupted(name, blob):
+            if name == 'selected_samples.csv': raise RuntimeError('CSV interruption')
+            return original(name, blob)
+        with patch.object(out, 'put', side_effect=interrupted):
+            with self.assertRaisesRegex(RuntimeError, 'CSV interruption'): r.publish_plan(out, contract, chosen)
+        self.assertTrue((out.root/'plan.json').exists())
+        self.assertFalse((out.root/'selected_samples.csv').exists())
+        r.publish_plan(out, contract, chosen)
+        self.assertEqual((out.root/'selected_samples.csv').read_bytes(), r.v.csv_bytes(chosen))
+        (out.root/'selected_samples.csv').write_bytes(b'changed')
+        with self.assertRaisesRegex(ValueError, 'Selection output changed'): r.publish_plan(out, contract, chosen)
+
+    def test_last_resume_commit_repairs_missing_progress_update(self):
+        _, args, prepared, build, t, data, initial = self.fixture()
+        out, protocol, groups, chosen, stages = prepared
+        out.json('acceptance.json', dict(passed=True, plan_sha256=r.v.sha(out.root/'plan.json'), files={}))
+        original = r.s.BudgetOutput.json
+        def interrupted(self, name, value):
+            if name == 'G6/progress.json' and value['committed_step'] == 3:
+                raise RuntimeError('before progress update')
+            return original(self, name, value)
+        with patch.object(r, 'preflight',return_value=prepared), patch.object(r, 'build',side_effect=build):
+            with patch.object(r.s.BudgetOutput, 'json', interrupted):
+                with self.assertRaisesRegex(RuntimeError, 'before progress update'): r.run_group(args, 'G6')
+            self.assertEqual(r.u.load_checkpoint(out.root/'G6/resume.pth')['state']['cursor'], 3)
+            self.assertEqual(r.v.read(out.root/'G6/progress.json')['committed_step'], 2)
+            with patch.object(r, 'adapt_one',side_effect=AssertionError('final committed step must not repeat')):
+                r.run_group(args, 'G6')
+            self.assertEqual(r.v.read(out.root/'G6/progress.json')['committed_step'], 3)
+            self.assertEqual(r.v.read(out.root/'G6/status.json')['status'], 'complete')
+
+    def test_full_preflight_with_real_manifest_hashes_and_frozen_budget(self):
+        root, _, _, _, _, _, initial = self.fixture()
+        paths = {name:root/name for name in ['experiment_dir','diagnostic_dir','factorial_dir','strength_dir','visual_dir','pilot_dir']}
+        args = SimpleNamespace(**paths, output_dir=root/'formal_preflight', device='cpu', max_gb=1.)
+        exp, diag, fac, strength, visual, pilot = [paths[n] for n in paths]
+        def image_record(name):
+            path = root/name; path.write_bytes(r.pilot.image_bytes(torch.rand(1,3,40,48)))
+            return dict(sample_id=name, raw_path=str(path), reference_path=str(path),
+                        raw_sha256=r.v.sha(path), reference_sha256=r.v.sha(path))
+        target = [image_record('target_%02d.png'%i) for i in range(10)]
+        audit = dict(files={})
+        for name, rows in [('source_train',[image_record('train.png')]),('source_val',[image_record('val.png')]),('target_eval',target)]:
+            path = exp/'manifests'/(name+'.csv'); path.parent.mkdir(parents=True,exist_ok=True)
+            path.write_bytes(r.v.csv_bytes(rows)); audit['files'][path.name]=r.v.sha(path)
+        r.f.write(exp/'manifests/audit.json', audit)
+        state = {n.removeprefix('backbone.'):x for n,x in initial['student']['weights'].items()}
+        checkpoint = exp/'source/checkpoints/best.pth'
+        r.f.save_checkpoint(checkpoint, dict(net=state,model_config=dict(basic_channel=4,is_residual=True,tail='norm'),
+            training_contract=dict(data={n:audit['files'][n] for n in ['source_train.csv','source_val.csv']})))
+        samples = r.u.select_samples(manifest=exp/'manifests/target_eval.csv')
+        data = r.u.TargetRawDataset(samples,32,23); order = [x.sample_id for x in samples]
+        env = r.d.environment()
+        protocol = dict(diagnostic_protocol='fixed_fisher_strict', source_sha256=r.v.sha(checkpoint),
+                        target=data.identity(), order=order, config=dict(patch_size=32,seed=23),environment=env)
+        r.f.write(diag/'protocol.json', protocol)
+        for phase in ['run','evaluation']: r.f.write(diag/phase/'status.json', dict(status='complete'))
+        r.f.save_checkpoint(diag/'run/replay_states/000000.pth', initial)
+        r.f.save_checkpoint(diag/'acceptance/initial.pth', initial)
+        records = [dict(sample_id=n,psnr=20.,ssim=.8) for n in order]+[dict(sample_id='val.png',psnr=22.,ssim=.9)]
+        r.f.write(exp/'source_only/run.json', dict(status='complete',configuration=dict(mode='baseline'),
+            source_checkpoint_sha256=r.v.sha(checkpoint),metrics='RGB float clip[0,1], data_range=1, skimage defaults',
+            evaluation_records=[dict(image=n,psnr=20.,ssim=.8) for n in order]))
+        for step in [0,10]: r.f.write(diag/'evaluation'/('%06d_student.json'%step),records)
+        selected = [dict(sample_id=n,reason='fixed') for n in order]
+        visual.mkdir(); (visual/'selected_samples.csv').write_bytes(r.v.csv_bytes(selected))
+        r.f.write(visual/'status.json',dict(status='complete'))
+        pilot.mkdir()
+        pm = dict(fit=r.FIT.identity(),points=[0,5,20,50,100,200],implementations={'physical_degradation.py':r.v.sha(r.p.__file__)},
+                  source_sha256=r.v.sha(checkpoint),protocol_sha256=r.v.sha(diag/'protocol.json'),samples=data.identity())
+        r.f.write(pilot/'manifest.json',pm)
+        r.f.write(pilot/'status.json',dict(status='complete',manifest_sha256=r.v.sha(pilot/'manifest.json'),files={}))
+        r.f.write(fac/'plan.json',dict(protocol_sha256=r.v.sha(diag/'protocol.json'),initial_sha256=r.v.sha(diag/'run/replay_states/000000.pth'),
+            entry_sha256=r.v.sha(r.f.__file__),g0_evaluation_sha256={n:r.v.sha(diag/'evaluation'/n) for n in ['000000_student.json','000010_student.json']}))
+        for g in ['G1','G2','G3','G4','G5']:
+            folder = (fac if g in ['G1','G2','G3'] else strength)/g
+            final = folder/'evaluation/000010_student.json'; r.f.write(final,records)
+            r.f.write(folder/('run_status.json' if g in ['G1','G2','G3'] else 'status.json'),
+                      dict(status='complete', files={g+'/evaluation/000010_student.json':r.v.sha(final)}))
+            if g in ['G1','G2','G3']:
+                r.f.write(folder/'evaluation/index.json',{'000010_student.json':r.v.sha(final)})
+                r.f.write(folder/'evaluation/status.json',dict(status='complete'))
+        r.f.save_checkpoint(fac/'G3/snapshots/000001.pth',dict(student=initial['student']['weights']))
+        # 只替换生产项目限定的固定产物白名单；其余清单、源权重、协议、旧评价均走真实文件和哈希检查。
+        with patch.object(r.d,'verify_fixed_files'):
+            prepared = r.preflight(args); r.preflight(args)
+            self.assertEqual(len(prepared[3]),10)
+            self.assertEqual(r.v.read(prepared[0].root/'plan.json')['contract']['fit_steps'],200)
+            pm['points'][-1] = 100; r.f.write(pilot/'manifest.json',pm)
+            r.f.write(pilot/'status.json',dict(status='complete',manifest_sha256=r.v.sha(pilot/'manifest.json'),files={}))
+            with self.assertRaisesRegex(ValueError,'Approved pilot fit'): r.preflight(args)
+
+
 if __name__ == '__main__': unittest.main()
