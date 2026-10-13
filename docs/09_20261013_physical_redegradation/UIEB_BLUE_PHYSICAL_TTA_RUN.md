@@ -14,7 +14,18 @@ G6/G7独立从同一源学生初态开始；两组对应图片的T/B参数哈希
 
 ## 2. 同步与Git
 
-交付包解压至F:\qmh\DCTTA-uie，保持相对目录。PACKAGE_MANIFEST.json记录开发提交和文件SHA256。包含新正式入口、测试、文档及所需辅助文件；数据、源权重、旧实验输出不在包中。诊断辅助文件随包同步，旧实验目录保持原样。
+直接同步文件至程序机F:\qmh\DCTTA-uie，保持相对目录，同名文件覆盖。运行所需文件：
+
+~~~text
+run_physical_uie.py
+physical_degradation.py
+pilot_physical_uie.py
+diagnose_visual_uie.py
+run_strength_uie.py
+run_factorial_uie.py
+~~~
+
+本方案与本运行说明保存在docs/09_20261013_physical_redegradation/，同步至程序机相同子目录。若要执行专项测试，再同步tests/test_physical_tta.py和tests/test_migration.py。
 
 请在仓库根目录记录：
 
@@ -25,7 +36,7 @@ git rev-parse HEAD
 git status --short
 ~~~
 
-解压包不会切换程序机Git分支。正式plan.json另记录本地提交/工作区状态，并冻结实际源码哈希；解压后工作区有变更时，包内哈希比单独的HEAD更能说明实际运行文件身份。不要在运行中换代码或切换分支。
+直接复制文件不会切换程序机Git分支。正式plan.json记录程序机提交、工作区状态以及实际源码SHA256；复制后有未提交改动时，HEAD不能单独代表正在运行的源码，以plan.json中的实际文件哈希为准。不要在运行中换代码或切换分支。
 
 ## 3. 新窗口选择显卡与目录
 
@@ -40,13 +51,13 @@ nvidia-smi --query-gpu=index,pci.bus_id,uuid,memory.used --format=csv
 ~~~powershell
 $env:CUDA_VISIBLE_DEVICES = "GPU-53f5a782-8c8c-958b-006d-c8aad0f4d8a3"
 $env:CUBLAS_WORKSPACE_CONFIG = ":4096:8"
-$exp = ".\experiments\UIEBblue_weaktostrong_NU2Net"
-$diag = "E:/Codex/DCTTA-main/movetoUIE/experiments/UIEBblue_weaktostrong_NU2Net_diagnostic_v2"
-$fac = "E:/Codex/DCTTA-main/movetoUIE/experiments/UIEBblue_weaktostrong_NU2Net_factorial_v1"
-$strength = "E:/Codex/DCTTA-main/movetoUIE/experiments/UIEBblue_weaktostrong_NU2Net_strength_v1"
-$visual = "E:/Codex/DCTTA-main/movetoUIE/experiments/UIEBblue_weaktostrong_NU2Net_visual_v2"
-$pilot = "E:/Codex/DCTTA-main/movetoUIE/experiments/UIEBblue_weaktostrong_NU2Net_physical_pilot_v1"
-$out = "E:/Codex/DCTTA-main/movetoUIE/experiments/UIEBblue_weaktostrong_NU2Net_physical_v1"
+$exp = "F:\qmh\DCTTA-uie\experiments\UIEBblue_weaktostrong_NU2Net"
+$diag = "F:\qmh\DCTTA-uie\experiments\UIEBblue_weaktostrong_NU2Net_diagnostic_v2"
+$fac = "F:\qmh\DCTTA-uie\experiments\UIEBblue_weaktostrong_NU2Net_factorial_v1"
+$strength = "F:\qmh\DCTTA-uie\experiments\UIEBblue_weaktostrong_NU2Net_strength_v1"
+$visual = "F:\qmh\DCTTA-uie\experiments\UIEBblue_weaktostrong_NU2Net_visual_v2"
+$pilot = "F:\qmh\DCTTA-uie\experiments\UIEBblue_weaktostrong_NU2Net_physical_pilot_v1"
+$out = "F:\qmh\DCTTA-uie\experiments\UIEBblue_weaktostrong_NU2Net_physical_v1"
 $physicalArgs = @(
   "--experiment_dir", $exp,
   "--diagnostic_dir", $diag,
