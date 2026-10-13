@@ -1,0 +1,49 @@
+{
+  "status": "verified",
+  "hashed_files": 2769,
+  "pngs": 1952,
+  "bytes": 1744092672,
+  "local_implementation_matches": {
+    "run_physical_uie.py": true,
+    "physical_degradation.py": true,
+    "pilot_physical_uie.py": true,
+    "diagnose_uie.py": true,
+    "diagnose_visual_uie.py": true,
+    "run_strength_uie.py": true,
+    "run_factorial_uie.py": true,
+    "uie_tta.py": true,
+    "options.py": true,
+    "uie_backbones/nu2net.py": true,
+    "utils/loss_utils.py": true,
+    "utils/val_utils.py": true,
+    "train_source_uie.py": true
+  },
+  "common_fit_images": 133,
+  "common_initial_hashes": 1,
+  "freeze": {
+    "G6": {
+      "cursor": 133,
+      "teacher_frozen": true,
+      "protected_elements": 1887542,
+      "protected_changed": 0,
+      "state_sha256_verified": true
+    },
+    "G7": {
+      "cursor": 133,
+      "teacher_frozen": true,
+      "protected_elements": 1887542,
+      "protected_changed": 0,
+      "state_sha256_verified": true
+    }
+  },
+  "stage_constants": {
+    "G6_teacher_pseudo": 10,
+    "G6_x_sd": 10,
+    "G7_teacher_pseudo": 10,
+    "G7_x_sd": 10
+  },
+  "program_git": {
+    "commit": "unavailable",
+    "worktree": "unavailable"
+  }
+}

@@ -4,7 +4,7 @@
 
 ## 当前应该看什么
 
-- 最新结果：[G4/G5综合分析](07_20260917_strength_control/UIEB_BLUE_STRENGTH_CONTROL_ANALYSIS.md)。
+- 最新结果：[G6/G7综合分析与后续建议](09_20261013_physical_redegradation/UIEB_BLUE_PHYSICAL_TTA_ANALYSIS.md)。
 
 - 当前开发：[逐图独立物理再退化方案](09_20261013_physical_redegradation/UIEB_BLUE_PHYSICAL_REDEGRADATION_PLAN.md)。
 - 最近证据：[整图诊断分析](06_20260914_15_visual_diagnostic/UIEB_BLUE_VISUAL_DIAGNOSTIC_ANALYSIS.md)与[路径对照分析](05_20260912_13_factorial/UIEB_BLUE_FACTORIAL_ANALYSIS.md)。
@@ -89,13 +89,14 @@
 
 ### 阶段9：逐图独立物理再退化（10-13起）
 
-状态：预实验已回传并核验；用户确认K=200。正式G6/G7入口与11项正式TTA本地CPU测试完成，程序机CUDA验收与正式实验待运行。
+状态：预实验、CUDA验收与正式G6/G7均完成并回传，已核验并综合分析。G6/G7没有超过当前G5平均PSNR，后续建议尚未实现。
 
 - [UIEB_BLUE_PHYSICAL_REDEGRADATION_PLAN.md](09_20261013_physical_redegradation/UIEB_BLUE_PHYSICAL_REDEGRADATION_PLAN.md)
 - [物理再退化预实验运行说明](09_20261013_physical_redegradation/UIEB_BLUE_PHYSICAL_PILOT_RUN.md)
 - [预实验回传分析](09_20261013_physical_redegradation/UIEB_BLUE_PHYSICAL_PILOT_ANALYSIS.md)
 - [G6/G7正式程序机运行说明](09_20261013_physical_redegradation/UIEB_BLUE_PHYSICAL_TTA_RUN.md)
 - [G6/G7代码复查与修复记录](09_20261013_physical_redegradation/UIEB_BLUE_PHYSICAL_TTA_CODE_REVIEW.md)
+- [G6/G7综合分析与后续建议](09_20261013_physical_redegradation/UIEB_BLUE_PHYSICAL_TTA_ANALYSIS.md)
 
 ## 如何区分文件用途
 
