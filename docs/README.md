@@ -6,7 +6,7 @@
 
 - 最新结果：[G4/G5综合分析](07_20260917_strength_control/UIEB_BLUE_STRENGTH_CONTROL_ANALYSIS.md)。
 
-- 当前补诊断：[G0 y_in方案](08_20260921_g0_yin/G0_YIN_PLAN.md)与[程序机运行说明](08_20260921_g0_yin/G0_YIN_RUN.md)。
+- 当前开发：[逐图独立物理再退化方案](09_20261013_physical_redegradation/UIEB_BLUE_PHYSICAL_REDEGRADATION_PLAN.md)。
 - 最近证据：[整图诊断分析](06_20260914_15_visual_diagnostic/UIEB_BLUE_VISUAL_DIAGNOSTIC_ANALYSIS.md)与[路径对照分析](05_20260912_13_factorial/UIEB_BLUE_FACTORIAL_ANALYSIS.md)。
 - 版本管理：[Git工作建议](00_project/GIT_WORKFLOW.md)。
 
@@ -86,6 +86,12 @@
 - [G0_YIN_PLAN.md](08_20260921_g0_yin/G0_YIN_PLAN.md)
 - [统一中间过程图入口与运行说明](08_20260921_g0_yin/G0_UNIFIED_VISUAL_RUN.md)
 - [G0_YIN_RUN.md](08_20260921_g0_yin/G0_YIN_RUN.md)（旧版独立入口）
+
+### 阶段9：逐图独立物理再退化（10-13起）
+
+状态：方案确定，先开发并运行步数预实验，正式G6/G7待预实验配置冻结。
+
+- [UIEB_BLUE_PHYSICAL_REDEGRADATION_PLAN.md](09_20261013_physical_redegradation/UIEB_BLUE_PHYSICAL_REDEGRADATION_PLAN.md)
 
 ## 如何区分文件用途
 
