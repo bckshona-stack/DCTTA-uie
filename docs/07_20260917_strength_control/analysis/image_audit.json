@@ -1,0 +1,14 @@
+{
+  "G4": {
+    "rows": 463,
+    "max_recompute_error": 0.0,
+    "max_quant_error": 0.0074378737752915924,
+    "mean_quant_error": 0.0005643046214476823
+  },
+  "G5": {
+    "rows": 463,
+    "max_recompute_error": 0.0,
+    "max_quant_error": 0.013020780928677311,
+    "mean_quant_error": 0.0015716403852826068
+  }
+}

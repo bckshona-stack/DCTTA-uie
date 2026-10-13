@@ -1,0 +1,26 @@
+{
+  "G4": {
+    "cursor": 133,
+    "rows": 133,
+    "state_digest_ok": true,
+    "last_trajectory_digest_ok": true,
+    "protected": 1887542,
+    "protected_changed": 0,
+    "student_teacher_l2": 0.0465882841914604,
+    "student_source_l2": 4.596467433531291,
+    "teacher_source_l2": 4.584483121162948,
+    "fixed_teacher_equals_source": false
+  },
+  "G5": {
+    "cursor": 133,
+    "rows": 133,
+    "state_digest_ok": true,
+    "last_trajectory_digest_ok": true,
+    "protected": 1887542,
+    "protected_changed": 0,
+    "student_teacher_l2": 2.413053108907911,
+    "student_source_l2": 2.413053108907911,
+    "teacher_source_l2": 0.0,
+    "fixed_teacher_equals_source": true
+  }
+}

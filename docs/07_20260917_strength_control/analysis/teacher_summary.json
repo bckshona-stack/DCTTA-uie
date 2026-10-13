@@ -1,0 +1,16 @@
+{
+  "G4": {
+    "initial": 21.822022897875893,
+    "final": 15.162654505630309,
+    "declined": 131,
+    "student_over_fixed_source_teacher": 2,
+    "student_final_minus_initial_teacher": -6.675890891352452
+  },
+  "G5": {
+    "initial": 21.822022897875893,
+    "final": 21.822022897875893,
+    "declined": 0,
+    "student_over_fixed_source_teacher": 84,
+    "student_final_minus_initial_teacher": 0.20594797606963286
+  }
+}

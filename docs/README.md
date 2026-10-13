@@ -1,10 +1,12 @@
 # 文档导航与实验阶段
 
-更新：2026-09-17。目录编号表示研究推进顺序，日期表示阶段起始或主要工作区间，不改变文件正文中原有日期。所有运行命令仍在仓库根目录执行，不能在归档子目录中直接运行。
+更新：2026-10-13。目录编号表示研究推进顺序，日期表示阶段起始或主要工作区间，不改变文件正文中原有日期。所有运行命令仍在仓库根目录执行，不能在归档子目录中直接运行。
 
 ## 当前应该看什么
 
-- 下一步：[两组强度对照方案](07_20260917_strength_control/UIEB_BLUE_STRENGTH_CONTROL_PLAN.md)。
+- 最新结果：[G4/G5综合分析](07_20260917_strength_control/UIEB_BLUE_STRENGTH_CONTROL_ANALYSIS.md)。
+
+- 当前补诊断：[G0 y_in方案](08_20260921_g0_yin/G0_YIN_PLAN.md)与[程序机运行说明](08_20260921_g0_yin/G0_YIN_RUN.md)。
 - 最近证据：[整图诊断分析](06_20260914_15_visual_diagnostic/UIEB_BLUE_VISUAL_DIAGNOSTIC_ANALYSIS.md)与[路径对照分析](05_20260912_13_factorial/UIEB_BLUE_FACTORIAL_ANALYSIS.md)。
 - 版本管理：[Git工作建议](00_project/GIT_WORKFLOW.md)。
 
@@ -71,10 +73,19 @@
 
 ### 阶段7：再退化使用强度对照（09-17起）
 
-状态：当前阶段；G4/G5入口已实现，正式程序机验收与运行待执行。
+状态：G4/G5已完成并回传，综合分析已完成。
 
+- [G4/G5综合分析](07_20260917_strength_control/UIEB_BLUE_STRENGTH_CONTROL_ANALYSIS.md)
 - [G4/G5程序机运行说明](07_20260917_strength_control/UIEB_BLUE_STRENGTH_CONTROL_RUN.md)
 - [UIEB_BLUE_STRENGTH_CONTROL_PLAN.md](07_20260917_strength_control/UIEB_BLUE_STRENGTH_CONTROL_PLAN.md)
+
+### 阶段8：G0 学生原图输出补诊断（09-21起）
+
+状态：visual_yin_v1已回传并完成核验；不新增适应实验组。
+
+- [G0_YIN_PLAN.md](08_20260921_g0_yin/G0_YIN_PLAN.md)
+- [统一中间过程图入口与运行说明](08_20260921_g0_yin/G0_UNIFIED_VISUAL_RUN.md)
+- [G0_YIN_RUN.md](08_20260921_g0_yin/G0_YIN_RUN.md)（旧版独立入口）
 
 ## 如何区分文件用途
 

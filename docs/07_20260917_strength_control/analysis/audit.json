@@ -1,0 +1,21 @@
+{
+  "files_checked": 1673,
+  "errors": [],
+  "missing": [],
+  "bytes": 3957214173,
+  "environment_matches_G0": true,
+  "order_matches_G0": true,
+  "protocol_matches": true,
+  "additional_inputs": {
+    "source": true,
+    "source_only": true,
+    "factorial_plan": true,
+    "G1/trajectory.json": true,
+    "G1/evaluation/index.json": true,
+    "G2/trajectory.json": true,
+    "G2/evaluation/index.json": true,
+    "G3/trajectory.json": true,
+    "G3/evaluation/index.json": true
+  },
+  "summary_max_error": 3.552713678800501e-15
+}
