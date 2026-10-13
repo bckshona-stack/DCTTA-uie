@@ -1,0 +1,36 @@
+{
+  "status": "complete",
+  "files_checked": 927,
+  "errors": [],
+  "manifest_match": true,
+  "metric_rows": 120,
+  "initial_parameter_hashes": [
+    "4dcc1fdc83016680b99bc724066e368401f642c7dace07d59873f571aa61299b"
+  ],
+  "implementations": {
+    "pilot_physical_uie.py": {
+      "recorded": "24df7f72372f50e0bb87af06b52abf0812ed042ed14e7c0859b695a2712a3f6d",
+      "local": "24df7f72372f50e0bb87af06b52abf0812ed042ed14e7c0859b695a2712a3f6d"
+    },
+    "physical_degradation.py": {
+      "recorded": "be0f596e64d513f82311dada833333e811cc2ae2104266c94be18525bd236304",
+      "local": "be0f596e64d513f82311dada833333e811cc2ae2104266c94be18525bd236304"
+    },
+    "diagnose_visual_uie.py": {
+      "recorded": "b5896659c5e4392d525c5054eab67e4fbd6b05d5414f67470f525108ac7ba159",
+      "local": "266dfb129327ca1c271b4a877755fd83e3e15185cbdc510b33aa71065d189d06"
+    },
+    "uie_tta.py": {
+      "recorded": "a0b5c7cb0ebff9afaa10df1e29d9de787a19bfdc9f6e13a53afb553411f5271a",
+      "local": "a0b5c7cb0ebff9afaa10df1e29d9de787a19bfdc9f6e13a53afb553411f5271a"
+    },
+    "options.py": {
+      "recorded": "190b3d233cfc0e059823b11510a484bf79f402fae5d03dddf652e0f8c759075b",
+      "local": "190b3d233cfc0e059823b11510a484bf79f402fae5d03dddf652e0f8c759075b"
+    },
+    "uie_backbones/nu2net.py": {
+      "recorded": "040c0dc550c5d9899279ea0fd037372b23b2fb73ca0e09c2b991f1cb09a91b10",
+      "local": "040c0dc550c5d9899279ea0fd037372b23b2fb73ca0e09c2b991f1cb09a91b10"
+    }
+  }
+}

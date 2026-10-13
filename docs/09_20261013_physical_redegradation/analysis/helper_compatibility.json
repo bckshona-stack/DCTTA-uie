@@ -1,0 +1,8 @@
+{
+  "read": true,
+  "sha": true,
+  "csv_bytes": true,
+  "Output": true,
+  "independent_output": true,
+  "verify_files": true
+}

@@ -89,10 +89,11 @@
 
 ### 阶段9：逐图独立物理再退化（10-13起）
 
-状态：预实验实现和本地测试完成，待程序机执行；正式G6/G7待预实验配置冻结。
+状态：预实验已回传并核验，建议K200待确认；正式G6/G7尚未实现。
 
 - [UIEB_BLUE_PHYSICAL_REDEGRADATION_PLAN.md](09_20261013_physical_redegradation/UIEB_BLUE_PHYSICAL_REDEGRADATION_PLAN.md)
 - [物理再退化预实验运行说明](09_20261013_physical_redegradation/UIEB_BLUE_PHYSICAL_PILOT_RUN.md)
+- [预实验回传分析](09_20261013_physical_redegradation/UIEB_BLUE_PHYSICAL_PILOT_ANALYSIS.md)
 
 ## 如何区分文件用途
 

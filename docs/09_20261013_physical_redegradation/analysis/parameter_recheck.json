@@ -1,0 +1,10 @@
+{
+  "parameter_snapshots": 120,
+  "parameter_hash_fail": [],
+  "max_key_stat_error": 1.7881393432617188e-07,
+  "max_cpu_vs_saved_png_level_difference": 1,
+  "max_cpu_vs_saved_png_changed_fraction": 1.0761019283746557e-05,
+  "max_quantized_pseudo_reconstruction_l1_difference": 0.00013000378385186195,
+  "quantization_bound_fail": [],
+  "composition_identity_max_error": 1.0617077350616455e-07
+}
