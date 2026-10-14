@@ -1,6 +1,6 @@
 # 文档导航与实验阶段
 
-更新：2026-10-13。目录编号表示研究推进顺序，日期表示阶段起始或主要工作区间，不改变文件正文中原有日期。所有运行命令仍在仓库根目录执行，不能在归档子目录中直接运行。
+更新：2026-10-14。目录编号表示研究推进顺序，日期表示阶段起始或主要工作区间，不改变文件正文中原有日期。所有运行命令仍在仓库根目录执行，不能在归档子目录中直接运行。
 
 ## 当前应该看什么
 
@@ -97,6 +97,7 @@
 - [G6/G7正式程序机运行说明](09_20261013_physical_redegradation/UIEB_BLUE_PHYSICAL_TTA_RUN.md)
 - [G6/G7代码复查与修复记录](09_20261013_physical_redegradation/UIEB_BLUE_PHYSICAL_TTA_CODE_REVIEW.md)
 - [G6/G7综合分析与后续建议](09_20261013_physical_redegradation/UIEB_BLUE_PHYSICAL_TTA_ANALYSIS.md)
+- [10-14：G5与物理方案中间结果及机制深挖](09_20261013_physical_redegradation/UIEB_BLUE_G5_PHYSICAL_MECHANISM_ANALYSIS.md)
 
 ## 如何区分文件用途
 

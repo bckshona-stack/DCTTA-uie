@@ -177,3 +177,5 @@ G5继续作为当前开发集的PSNR参照，G3作为稳健参照。方法和阈
 - [分项耗时和损失](formal_analysis/timing_and_losses.json)
 
 分析报告与精选小型证据独立进入Git；实验目录、恢复状态、参数权重和全量图像不加入Git。
+
+后续补充（2026-10-14）：[G5与物理方案中间结果及机制深挖](UIEB_BLUE_G5_PHYSICAL_MECHANISM_ANALYSIS.md)新增冻结源学生诊断，区分G5生成器变化与学生学习，指出低loss仍可能有相似首步更新，并提高学习率单变量对照的检查优先级。

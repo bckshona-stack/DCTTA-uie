@@ -1,0 +1,123 @@
+{
+  "summary": {
+    "G5": {
+      "start": {
+        "group": "G5",
+        "step": 0,
+        "input_raw_l1": 0.06344704180955887,
+        "ysd_teacher_l1": 0.04938374124467373,
+        "yin_teacher_l1": 0.005905831162817776,
+        "ysd_yin_l1": 0.0493955060839653,
+        "ysd_psnr": 18.322708809358893,
+        "yin_psnr": 21.544822877784952,
+        "input_gradient_ratio": 1.2152460682105803,
+        "teacher_difference_direction_cosine": 0.18772096612415046,
+        "r_mean_shift": 0.0025999907520599663,
+        "g_mean_shift": 0.01289409091696143,
+        "b_mean_shift": 0.14000922068953514,
+        "r_std_ratio": 1.1535886764526366,
+        "g_std_ratio": 0.9762638092041016,
+        "b_std_ratio": 0.6835438966751098
+      },
+      "end": {
+        "group": "G5",
+        "step": 133,
+        "input_raw_l1": 0.0346988532692194,
+        "ysd_teacher_l1": 0.014875913225114345,
+        "yin_teacher_l1": 0.015239911060780287,
+        "ysd_yin_l1": 0.01786348093301058,
+        "ysd_psnr": 21.181851569536878,
+        "yin_psnr": 21.501437426162376,
+        "input_gradient_ratio": 0.9084337008141559,
+        "teacher_difference_direction_cosine": 0.764595459098939,
+        "r_mean_shift": -0.05470508891157806,
+        "g_mean_shift": 0.0029269532533362508,
+        "b_mean_shift": 0.031058077327907087,
+        "r_std_ratio": 0.6367668986320496,
+        "g_std_ratio": 0.8788492918014527,
+        "b_std_ratio": 0.9271862745285034
+      }
+    },
+    "G6": {
+      "start": {
+        "group": "G6",
+        "step": 0,
+        "input_raw_l1": 0.020362671930342913,
+        "ysd_teacher_l1": 0.01527349529787898,
+        "yin_teacher_l1": 0.005905831162817776,
+        "ysd_yin_l1": 0.013368448056280614,
+        "ysd_psnr": 21.48666395580774,
+        "yin_psnr": 21.544822877784952,
+        "input_gradient_ratio": 0.8603756989940701,
+        "teacher_difference_direction_cosine": 0.8357628900247273,
+        "r_mean_shift": -0.023733044089749456,
+        "g_mean_shift": 0.006801305897533893,
+        "b_mean_shift": 0.018676440394483507,
+        "r_std_ratio": 0.7666652858257293,
+        "g_std_ratio": 0.9281231701374054,
+        "b_std_ratio": 0.9326447486877442
+      },
+      "end": {
+        "group": "G6",
+        "step": 133,
+        "input_raw_l1": 0.020362671930342913,
+        "ysd_teacher_l1": 0.010666445177048445,
+        "yin_teacher_l1": 0.012898110086098313,
+        "ysd_yin_l1": 0.011713524395599962,
+        "ysd_psnr": 21.530988527413196,
+        "yin_psnr": 21.329455570058062,
+        "input_gradient_ratio": 0.8603756989940701,
+        "teacher_difference_direction_cosine": 0.8357628900247273,
+        "r_mean_shift": -0.023733044089749456,
+        "g_mean_shift": 0.006801305897533893,
+        "b_mean_shift": 0.018676440394483507,
+        "r_std_ratio": 0.7666652858257293,
+        "g_std_ratio": 0.9281231701374054,
+        "b_std_ratio": 0.9326447486877442
+      }
+    },
+    "G7": {
+      "start": {
+        "group": "G7",
+        "step": 0,
+        "input_raw_l1": 0.04092691447585821,
+        "ysd_teacher_l1": 0.029258989822119476,
+        "yin_teacher_l1": 0.005905831162817776,
+        "ysd_yin_l1": 0.028712359443306922,
+        "ysd_psnr": 20.78845025257787,
+        "yin_psnr": 21.544822877784952,
+        "input_gradient_ratio": 0.7120424882820711,
+        "teacher_difference_direction_cosine": 0.8332414797095808,
+        "r_mean_shift": -0.04707553768530488,
+        "g_mean_shift": 0.013683633832260966,
+        "b_mean_shift": 0.037385666742920876,
+        "r_std_ratio": 0.5404445827007294,
+        "g_std_ratio": 0.8571840345859527,
+        "b_std_ratio": 0.8657215297222137
+      },
+      "end": {
+        "group": "G7",
+        "step": 133,
+        "input_raw_l1": 0.04092691447585821,
+        "ysd_teacher_l1": 0.022584577929228543,
+        "yin_teacher_l1": 0.020042875315994024,
+        "ysd_yin_l1": 0.024549048859626055,
+        "ysd_psnr": 21.35457142069564,
+        "yin_psnr": 21.23949291675944,
+        "input_gradient_ratio": 0.7120424882820711,
+        "teacher_difference_direction_cosine": 0.8332414797095808,
+        "r_mean_shift": -0.04707553768530488,
+        "g_mean_shift": 0.013683633832260966,
+        "b_mean_shift": 0.037385666742920876,
+        "r_std_ratio": 0.5404445827007294,
+        "g_std_ratio": 0.8571840345859527,
+        "b_std_ratio": 0.8657215297222137
+      }
+    }
+  },
+  "G5_verified_pngs": 330,
+  "teacher_same": true,
+  "G5_input_change_final_mean": 0.06669183783233165,
+  "G5_input_changed_images": 10,
+  "G5_yin_mean_gain": -0.043385451622576454
+}

@@ -1,0 +1,12 @@
+{
+  "means": {
+    "raw": 21.544820427894592,
+    "G5_xmix_0": 18.307278275489807,
+    "G5_xmix_133": 20.606765270233154
+  },
+  "raw_cpu_gpu_psnr_max_difference": 2.070727785152826e-05,
+  "G5_initial_input_png_and_cpu_max_difference": 0.047319651102469606,
+  "G5_final_frozen_vs_adapted_mean": -0.5750862993037226,
+  "generator_change_frozen_student_gain": 2.299486994743347,
+  "definition": "Separate CPU float32 frozen source inference on saved G5 PNG inputs. No student training; PNG quantization and Torch/device differ from original CUDA float inputs. Not a replacement formal metric."
+}
