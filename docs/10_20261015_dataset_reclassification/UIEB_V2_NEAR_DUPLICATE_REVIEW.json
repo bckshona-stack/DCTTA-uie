@@ -1,0 +1,39 @@
+{
+  "threshold": 12,
+  "method": "63bit luminance DCT pHash, followed by visual comparison",
+  "exhaustive_scene_audit": false,
+  "groups": {
+    "356_img_.png": "near_001",
+    "61_img_.png": "near_001",
+    "705_img_.png": "near_002",
+    "828_img_.png": "near_002",
+    "727_img_.png": "near_003",
+    "832_img_.png": "near_003"
+  },
+  "decisions": [
+    {
+      "first": "356_img_.png",
+      "second": "61_img_.png",
+      "same_content": true,
+      "note": "相同潜水员与珊瑚构图，分辨率不同，均中度。"
+    },
+    {
+      "first": "705_img_.png",
+      "second": "828_img_.png",
+      "same_content": true,
+      "note": "相同沉船与潜水员构图，均轻度。"
+    },
+    {
+      "first": "727_img_.png",
+      "second": "832_img_.png",
+      "same_content": true,
+      "note": "相同珊瑚及时间水印构图，均轻度。"
+    },
+    {
+      "first": "453_img_.png",
+      "second": "874_img_.png",
+      "same_content": false,
+      "note": "潜水员与地形不同，不能仅凭低频相似判为重复。"
+    }
+  ]
+}
