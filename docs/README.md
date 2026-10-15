@@ -6,6 +6,8 @@
 
 - 最新结果：[G6/G7综合分析与后续建议](09_20261013_physical_redegradation/UIEB_BLUE_PHYSICAL_TTA_ANALYSIS.md)。
 
+- 本轮运行：[四类轻度源训练与重度G0程序机说明](11_20261015_uieb4_source_g0/RUN.md)。
+
 - 当前数据工作：[四类轻中重重新划分结果与使用说明](10_20261015_dataset_reclassification/UIEB_RECLASSIFICATION_RESULT_AND_USE.md)。
 - 既有实现：[逐图独立物理再退化方案](09_20261013_physical_redegradation/UIEB_BLUE_PHYSICAL_REDEGRADATION_PLAN.md)。
 - 最近证据：[整图诊断分析](06_20260914_15_visual_diagnostic/UIEB_BLUE_VISUAL_DIAGNOSTIC_ANALYSIS.md)与[路径对照分析](05_20260912_13_factorial/UIEB_BLUE_FACTORIAL_ANALYSIS.md)。
@@ -102,12 +104,20 @@
 
 ### 阶段10：四类轻／中／重数据重整（10-15）
 
-状态：新视觉研究标注及原字节复制完成。879对分为轻度306、中度401、重度172；中度封存。没有训练新源模型或启动新TTA，旧蓝色训练入口尚未适配。
+状态：新视觉研究标注及原字节复制完成。879对分为轻度306、中度401、重度172；中度封存。数据复制已完成；本轮源训练与G0入口见阶段11。
 
 - [划分协议](10_20261015_dataset_reclassification/UIEB_RECLASSIFICATION_PLAN.md)
 - [结果、数据目录及使用说明](10_20261015_dataset_reclassification/UIEB_RECLASSIFICATION_RESULT_AND_USE.md)
 - [新标签与复制路径](10_20261015_dataset_reclassification/UIEB_V2_LABELS.csv)
 - [复制验收与描述性统计](10_20261015_dataset_reclassification/UIEB_V2_BUILD_SUMMARY.json)
+
+### 阶段11：四类轻度源训练与重度G0（10-15）
+
+状态：独立开发分支实现；程序机先训练新源模型，再执行严格G0验收和正式运行。
+
+- [实验方案](11_20261015_uieb4_source_g0/PLAN.md)
+- [程序机同步与运行说明](11_20261015_uieb4_source_g0/RUN.md)
+- [代码验证记录](11_20261015_uieb4_source_g0/VALIDATION.md)
 
 ## 如何区分文件用途
 
