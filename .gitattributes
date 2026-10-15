@@ -1,0 +1,5 @@
+# 新入口固定LF；已有历史文件保留原有工作区换行与产物身份。
+/prepare_uieb4_experiment.py text eol=lf
+/run_uieb4_g0.py text eol=lf
+/tests/test_uieb4.py text eol=lf
+/docs/11_20261015_uieb4_source_g0/* text eol=lf
