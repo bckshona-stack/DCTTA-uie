@@ -54,7 +54,7 @@ def prepare(source, eligibility, output):
     candidates = []
     for i, a in enumerate(records):
         for b in records[i + 1:]:
-            distance = (int(a['phash'], 16) ^ int(b['phash'], 16)).bit_count()
+            distance = bin(int(a['phash'], 16) ^ int(b['phash'], 16)).count('1')
             if distance <= 6:
                 candidates.append(dict(first=a['sample_id'], second=b['sample_id'], distance=distance))
     (output / 'near_duplicate_candidates.json').write_text(json.dumps(candidates, indent=2), encoding='utf-8')

@@ -1,12 +1,13 @@
 # 文档导航与实验阶段
 
-更新：2026-10-14。目录编号表示研究推进顺序，日期表示阶段起始或主要工作区间，不改变文件正文中原有日期。所有运行命令仍在仓库根目录执行，不能在归档子目录中直接运行。
+更新：2026-10-15。目录编号表示研究推进顺序，日期表示阶段起始或主要工作区间，不改变文件正文中原有日期。所有运行命令仍在仓库根目录执行，不能在归档子目录中直接运行。
 
 ## 当前应该看什么
 
 - 最新结果：[G6/G7综合分析与后续建议](09_20261013_physical_redegradation/UIEB_BLUE_PHYSICAL_TTA_ANALYSIS.md)。
 
-- 当前开发：[逐图独立物理再退化方案](09_20261013_physical_redegradation/UIEB_BLUE_PHYSICAL_REDEGRADATION_PLAN.md)。
+- 当前数据工作：[四类轻中重重新划分结果与使用说明](10_20261015_dataset_reclassification/UIEB_RECLASSIFICATION_RESULT_AND_USE.md)。
+- 既有实现：[逐图独立物理再退化方案](09_20261013_physical_redegradation/UIEB_BLUE_PHYSICAL_REDEGRADATION_PLAN.md)。
 - 最近证据：[整图诊断分析](06_20260914_15_visual_diagnostic/UIEB_BLUE_VISUAL_DIAGNOSTIC_ANALYSIS.md)与[路径对照分析](05_20260912_13_factorial/UIEB_BLUE_FACTORIAL_ANALYSIS.md)。
 - 版本管理：[Git工作建议](00_project/GIT_WORKFLOW.md)。
 
@@ -98,6 +99,15 @@
 - [G6/G7代码复查与修复记录](09_20261013_physical_redegradation/UIEB_BLUE_PHYSICAL_TTA_CODE_REVIEW.md)
 - [G6/G7综合分析与后续建议](09_20261013_physical_redegradation/UIEB_BLUE_PHYSICAL_TTA_ANALYSIS.md)
 - [10-14：G5与物理方案中间结果及机制深挖](09_20261013_physical_redegradation/UIEB_BLUE_G5_PHYSICAL_MECHANISM_ANALYSIS.md)
+
+### 阶段10：四类轻／中／重数据重整（10-15）
+
+状态：新视觉研究标注及原字节复制完成。879对分为轻度306、中度401、重度172；中度封存。没有训练新源模型或启动新TTA，旧蓝色训练入口尚未适配。
+
+- [划分协议](10_20261015_dataset_reclassification/UIEB_RECLASSIFICATION_PLAN.md)
+- [结果、数据目录及使用说明](10_20261015_dataset_reclassification/UIEB_RECLASSIFICATION_RESULT_AND_USE.md)
+- [新标签与复制路径](10_20261015_dataset_reclassification/UIEB_V2_LABELS.csv)
+- [复制验收与描述性统计](10_20261015_dataset_reclassification/UIEB_V2_BUILD_SUMMARY.json)
 
 ## 如何区分文件用途
 

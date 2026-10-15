@@ -1,0 +1,16 @@
+{
+  "date": "2026-10-15",
+  "status": "passed",
+  "verify_only_passed": true,
+  "image_files": 1758,
+  "pair_count": 879,
+  "source_raw_count": 890,
+  "source_reference_count": 890,
+  "image_bytes": 1457512598,
+  "tests": {
+    "passed": 3,
+    "failed": 0
+  },
+  "classification": "AI visual initial research labels; no human inter-rater validation",
+  "label_sha256": "c01063c647365f29128157dea792a17152c366ed41f96bb03824674f3f2b8003"
+}

@@ -1,0 +1,153 @@
+{
+  "version": "UIEB_reclassified_v2",
+  "date": "2026-10-15",
+  "status": "complete",
+  "pair_count": 879,
+  "image_files": 1758,
+  "image_bytes": 1457512598,
+  "original_pair_count": 890,
+  "excluded_count": 11,
+  "labels_sha256": "c01063c647365f29128157dea792a17152c366ed41f96bb03824674f3f2b8003",
+  "eligibility_sha256": "e5846e08e8d924cf81ac02f7301d2539a7a5aeeed7a50731f085e93a6a6b28f5",
+  "implementation_sha256": "1bb497571eaa4d9f28c27adffe4462e4cb6ef5b02cd49ba9ac10f4a80f06a648",
+  "category_counts": {
+    "light": {
+      "blue_tint": 175,
+      "green_tint": 68,
+      "hazy": 49,
+      "low_light": 14
+    },
+    "moderate": {
+      "blue_tint": 163,
+      "green_tint": 150,
+      "hazy": 77,
+      "low_light": 11
+    },
+    "severe": {
+      "blue_tint": 83,
+      "green_tint": 53,
+      "hazy": 32,
+      "low_light": 4
+    }
+  },
+  "severity_counts": {
+    "severe": 172,
+    "moderate": 401,
+    "light": 306
+  },
+  "copy_method": "shutil.copy2: no decode/encode/resize/rename of destination images",
+  "verified": "all source file hashes, destination file hashes and source dimensions",
+  "label_basis": "raw-only AI visual research annotation, single annotator, not official physical ground truth",
+  "middle_policy": "sealed: no training, adaptation or tuning",
+  "scene_audit": "Exact RGB duplicates removed. Three visually confirmed pHash candidate groups recorded. No exhaustive scene-disjointness claim.",
+  "source_model_psnr_used_for_labels": false,
+  "references_used_for_labels": false,
+  "previous_labels_used": false,
+  "implementation_commit": "065abd1",
+  "original_raw_files": 890,
+  "original_reference_files": 890,
+  "descriptive_raw_statistics": {
+    "light": {
+      "blue_tint": {
+        "count": 175,
+        "luma_mean": 0.432703313500958,
+        "dark_fraction_mean": 0.06742599525978542,
+        "blue_red_ratio_mean": 1.7813515929712822,
+        "green_red_ratio_mean": 1.6137011574561224,
+        "luma_std_mean": 0.19014309538323063
+      },
+      "green_tint": {
+        "count": 68,
+        "luma_mean": 0.4733709429201866,
+        "dark_fraction_mean": 0.021777295912834685,
+        "blue_red_ratio_mean": 1.1660168614051087,
+        "green_red_ratio_mean": 1.378900749439145,
+        "luma_std_mean": 0.1675196661927048
+      },
+      "hazy": {
+        "count": 49,
+        "luma_mean": 0.48686807484871103,
+        "dark_fraction_mean": 0.015737546292977495,
+        "blue_red_ratio_mean": 1.0413563176077254,
+        "green_red_ratio_mean": 1.0567791125748947,
+        "luma_std_mean": 0.15207876870754258
+      },
+      "low_light": {
+        "count": 14,
+        "luma_mean": 0.28489664013217303,
+        "dark_fraction_mean": 0.2287472216628625,
+        "blue_red_ratio_mean": 1.049859616613346,
+        "green_red_ratio_mean": 1.1393464239593303,
+        "luma_std_mean": 0.18291410663227828
+      }
+    },
+    "moderate": {
+      "blue_tint": {
+        "count": 163,
+        "luma_mean": 0.4030524825598625,
+        "dark_fraction_mean": 0.03725600517611187,
+        "blue_red_ratio_mean": 4.366894261740697,
+        "green_red_ratio_mean": 3.6863662907125225,
+        "luma_std_mean": 0.1420330121244884
+      },
+      "green_tint": {
+        "count": 150,
+        "luma_mean": 0.4793926045636787,
+        "dark_fraction_mean": 0.010697387046403536,
+        "blue_red_ratio_mean": 2.5516092442965115,
+        "green_red_ratio_mean": 2.8355760499744016,
+        "luma_std_mean": 0.1256392549438767
+      },
+      "hazy": {
+        "count": 77,
+        "luma_mean": 0.5176877970695332,
+        "dark_fraction_mean": 0.004178831313596716,
+        "blue_red_ratio_mean": 1.1622061422648642,
+        "green_red_ratio_mean": 1.1076446194163574,
+        "luma_std_mean": 0.11461559199605899
+      },
+      "low_light": {
+        "count": 11,
+        "luma_mean": 0.2166251962168741,
+        "dark_fraction_mean": 0.27159449328631224,
+        "blue_red_ratio_mean": 1.4202489840519135,
+        "green_red_ratio_mean": 1.2989853339710895,
+        "luma_std_mean": 0.13195879631993734
+      }
+    },
+    "severe": {
+      "blue_tint": {
+        "count": 83,
+        "luma_mean": 0.39678995891091645,
+        "dark_fraction_mean": 0.03612537267765792,
+        "blue_red_ratio_mean": 12.20933500850668,
+        "green_red_ratio_mean": 9.27201708784373,
+        "luma_std_mean": 0.1259280751442014
+      },
+      "green_tint": {
+        "count": 53,
+        "luma_mean": 0.4608163777796974,
+        "dark_fraction_mean": 0.009634311142776965,
+        "blue_red_ratio_mean": 2.743601161237778,
+        "green_red_ratio_mean": 3.9375433497917554,
+        "luma_std_mean": 0.11363863712566673
+      },
+      "hazy": {
+        "count": 32,
+        "luma_mean": 0.5251858088107915,
+        "dark_fraction_mean": 0.00006356323964497041,
+        "blue_red_ratio_mean": 2.5322588393057397,
+        "green_red_ratio_mean": 2.5096148880347955,
+        "luma_std_mean": 0.08819682530063974
+      },
+      "low_light": {
+        "count": 4,
+        "luma_mean": 0.2079463134636814,
+        "dark_fraction_mean": 0.2030071209525171,
+        "blue_red_ratio_mean": 3.3662575063204687,
+        "green_red_ratio_mean": 2.9581804706163966,
+        "luma_std_mean": 0.08897087544363151
+      }
+    }
+  }
+}
